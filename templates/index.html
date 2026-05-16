@@ -375,6 +375,11 @@ todos只包含${myRole}的行动项，2-4条，从会议中直接提取。`;
 
     resultData = data.data;
     resultData.myRole = myRole;
+    // 如果精确匹配不到，找最接近的key
+    if (!resultData.todos[myRole]) {
+      const keys = Object.keys(resultData.todos || {});
+      if (keys.length > 0) resultData.myRole = keys[0];
+    }
     showResult();
   } catch (e) {
     document.getElementById('loadingSection').classList.add('hidden');
